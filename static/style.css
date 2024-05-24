@@ -1,0 +1,48 @@
+body {
+  height: 600px;
+  font-family: Trebuchet MS, sans-serif;
+  font-weight: 200;
+  color:  #f2f2f2;
+  max-width: 70%;
+  position:relative; left:80px;
+  font-weight: 600;
+}
+
+h1, h2 {
+  max-width: 70%;
+  margin: 0.5em auto; /* Center the text horizontally */
+}
+
+h1 {
+  color: white;
+  font-weight: 900;
+}
+
+h2 {
+  color: lightgray;
+  font-weight: 700;
+}
+
+input[type="text"], input[type="password"], input[type="submit"] {
+    width: 100%; /* Make inputs full width */
+    padding: 10px; /* Adjust padding for inputs */
+    margin-bottom: 15px; /* Increase margin between inputs */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: black;
+    cursor: pointer;
+    height: 50px; /* Increase height of submit button */
+}
+
+#registration-form button[type="button"] {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    font-size: 18px;
+}

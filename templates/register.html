@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        #registration-form {
+            width: 80%;
+            margin: 0 auto;
+            margin-top: 50px;
+        }
+
+        #registration-form label {
+            font-size: 20px;
+            font-weight: bold; /* Make label text slightly darker */
+        }
+
+        #registration-form input[type="text"],
+        #registration-form input[type="password"],
+        #registration-form input[type="submit"],
+        #registration-form button[type="button"] {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        #registration-form input[type="submit"],
+        #registration-form button[type="button"] {
+            height: auto; /* Adjust height of the buttons to fit text */
+            background-color: #008CBA; /* Change button background color */
+            color: white; /* Set button text color to white */
+            font-weight: bold; /* Make button text slightly darker */
+        }
+
+        #registration-form input[type="submit"]:hover,
+        #registration-form button[type="button"]:hover {
+            background-color: #005f7f; /* Darken button background color on hover */
+        }
+
+        .error-message {
+            color: red;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+
+        .success-message {
+            color: green;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body style="background-image: url('{{ url_for('static', filename='background.jpg') }}');">
+    <h1>Register</h1>
+    <div id="registration-form">
+        <form action="{{ url_for('register') }}" method="POST">
+            <label for="username">Username:</label><br>
+            <input type="text" id="username" name="username" required><br>
+            <label for="pwd">Password:</label><br>
+            <input type="password" id="pwd" name="pwd" required><br>
+            <label for="pwd2">Password Again:</label><br>
+            <input type="password" id="pwd2" name="pwd2" required><br>
+            {% if error_message %}
+            <div class="error-message">{{ error_message }}</div>
+            {% endif %}
+            {% if success_message %}
+            <div class="success-message">{{ success_message }}</div>
+            {% endif %}
+            <input type="submit" value="Register">
+        </form>
+        <button type="button" onclick="goBack()">Back</button>
+    </div>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

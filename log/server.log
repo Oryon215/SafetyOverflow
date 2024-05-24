@@ -1,0 +1,90 @@
+24/05/2024 02:59:43 - 20 - Server set up at ('127.0.0.1', 1024).
+24/05/2024 02:59:55 - 20 - Connection accepted from ('127.0.0.1', 46914).
+24/05/2024 02:59:58 - 20 - Welcome a
+24/05/2024 03:00:00 - 20 - Threads:
+	New 
+	(Published at:23/05/2024 21:35:14).
+a 
+	(Published at:24/05/2024 02:23:28).
+
+24/05/2024 03:00:01 - 20 - New:
+	0: Author:Client
+	Time:23/05/2024 21:35:14
+	Hey, this is from my client.
+	
+	1: Author:Client
+	Time:23/05/2024 21:35:49
+	Hey, this is from my client.
+	
+	2: Author:Client
+	Time:23/05/2024 21:36:05
+	Hey, this is from my client.
+	
+	3: Author:Client
+	Time:23/05/2024 21:37:47
+	Hey, this is from my client.
+	
+	4: Author:Client
+	Time:23/05/2024 21:54:06
+	Hey, this is from my client.
+	
+	5: Author:Client
+	Time:23/05/2024 21:54:57
+	Hey, this is from my client.
+	
+	6: Author:Client
+	Time:23/05/2024 21:55:27
+	Hey, this is from my client.
+	
+	7: Author:a
+	Time:24/05/2024 00:13:19
+	a
+	
+	8: Author:a
+	Time:24/05/2024 00:13:30
+	It Worked!
+
+
+	
+	9: Author:a
+	Time:24/05/2024 00:15:48
+	mmm
+
+
+	
+	10: Author:a
+	Time:24/05/2024 01:12:31
+	aaa
+	
+	11: Author:a
+	Time:24/05/2024 02:34:23
+	v
+	
+	12: Author:Client
+	Time:24/05/2024 02:56:31
+	Hey, this is from my client.
+	
+	13: Author:Client
+	Time:24/05/2024 02:57:10
+	Hey, this is from my client.
+	
+	14: Author:Client
+	Time:24/05/2024 02:59:19
+	Hey, this is from my client.
+	
+	
+24/05/2024 03:01:05 - 20 - Welcome a
+24/05/2024 03:01:07 - 20 - Threads:
+	New 
+	(Published at:23/05/2024 21:35:14).
+a 
+	(Published at:24/05/2024 02:23:28).
+
+24/05/2024 03:05:06 - 20 - Connection accepted from ('127.0.0.1', 47264).
+24/05/2024 03:05:09 - 20 - Welcome a
+24/05/2024 03:05:13 - 20 - Threads:
+	New 
+	(Published at:23/05/2024 21:35:14).
+a 
+	(Published at:24/05/2024 02:23:28).
+

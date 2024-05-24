@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forum</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            background-image: url("{{ url_for('static', filename='binary.jpg') }}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: white;
+            /* Fallback background color */
+            background-color: #333; /* Dark grey color */
+        }
+        h1, h2 {
+            text-align: center;
+            margin-left: 10px; /* Adjust margin to move slightly to the left */
+        }
+        .comment-section, .forum-section {
+            width: 100%;
+            max-width: 900px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .comment {
+            background-color: white;
+            color: black;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            white-space: pre-wrap; /* Preserve new lines and tabs */
+        }
+        .comment-form {
+            margin-top: 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .comment-form label, .comment-form textarea, .comment-form input {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .comment-form textarea {
+            height: 100px;
+            resize: vertical;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .comment-form input[type="submit"] {
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            margin: 10px 0;
+        }
+        a {
+            color: black;
+            font-size: 20px;
+            height: auto;
+            width: auto;
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, box-shadow 0.3s;
+            outline-color: purple;
+            outline-style: solid;
+        }
+        a:hover {
+            background-color: #f0f0f0;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        #button {
+            width: 80%;
+            padding: 15px;
+            margin-bottom: 20px;
+            margin-right: 10px;
+            font-size: 18px;
+            height: auto;
+            background-color: #008CBA;
+            color: white;
+            font-weight: bold;
+        }
+        #button:hover {
+            background-color: #005f7f;
+        }
+        #button2
+        {
+
+        }
+        #create-form {
+            display: none;
+            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        #create-form label,
+        #create-form textarea,
+        #create-form input {
+            display: block;
+            width: calc(100% - 20px); /* Adjusting width for padding */
+            margin: 10px;
+        }
+        #create-form textarea {
+            height: 100px;
+            resize: vertical;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        #create-form input[type="submit"] {
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #create-form input[type="submit"]:hover {
+            background-color: #005f7f;
+        }
+    </style>
+</head>
+<body>
+<h1>Welcome To Safety Overflow Forum!</h1>
+{% if comments %}
+<div class="comment-section">
+    <div class="comment">{{ comments }}</div>
+    <form class="comment-form" action="#" method="POST">
+        <label for="new-comment">Add a new comment:</label>
+        <textarea id="new-comment" name="new-comment" required></textarea>
+        <input type="submit" value="Submit">
+    </form>
+    <br>
+    <button type="button" id="button" onclick="goBack()" style="margin-bottom: -200px; height: 50px; width: 860px; font-size: 16px; display: inline-block; margin-right:100px;">Back</button>
+</div>
+{% else %}
+<div class="forum-section">
+    <h2>{{ headline }}</h2>
+    <ul>
+        {% for thread in threads %}
+        <li>
+            <a href="{{ url_for('forum', thread=thread ) }}">{{ thread }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    <button type="button" id="button" onclick="goBack()" style="margin-bottom: -5px; height: 50px; font-size: 16px; display: inline-block;">Back</button>
+<button type="button" id="toggle-create-form" style="margin-top: 20px; display: inline; height: 50px; background-color: red;">Create Thread</button>
+    <div id="create-form" class="comment-form">
+        <form action="#" method="POST">
+            <label for="new-thread" style="color:black; font-size:20px;" >Thread Name:</label>
+            <input type="text" id="new-thread" name="new-thread" required placeholder="Only letters, numbers, and underscores">
+            <label for="first-comment" style="color:black; font-size:20px;">First Comment:</label>
+            <textarea id="first-comment" name="first-comment" required></textarea>
+            <input type="submit" value="Create Thread" style="background-color:green;">
+        </form>
+    </div>
+</div>
+{% endif %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("toggle-create-form").addEventListener("click", function() {
+            var createForm = document.getElementById("create-form");
+            if (createForm.style.display === "none" || createForm.style.display === "") {
+                createForm.style.display = "block";
+            } else {
+                createForm.style.display = "none";
+            }
+        });
+    });
+
+    function goBack() {
+        window.history.back();
+    }
+</script>
+</body>
+</html>

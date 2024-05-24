@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="keywords" content="Binary Exploitation, Cybersecurity, Binary Analysis">
+    <meta name="author" content="Inon Slutzker">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Safety Overflow</title>
+    <style>
+        body {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background-image: url("{{ url_for('static', filename='background.jpg') }}");
+        }
+        .container {
+            background-color: #f0f0f0; /* Updated background color to a nice gray shade */
+            border: 5px outset #ccc; /* Updated border color to a complementary gray */
+            width: 90%; /* Use percentage for responsive width */
+            max-width: 900px;
+            padding: 2rem; /* Use rem units for padding */
+            box-sizing: border-box;
+            margin: 2rem auto; /* Center the container */
+        }
+        .container p {
+            background-color: #f0f0f0; /* Ensure paragraph background matches container */
+            font-size: 1.5rem; /* Use rem units for font size */
+            line-height: 1.5; /* Increase line height for better readability */
+        }
+        form {
+            margin-top: 2rem; /* Use rem units for margin */
+        }
+        label {
+            font-size: 1.25rem; /* Use rem units for font size */
+        }
+        .register-btn {
+            background-color: #008CBA;
+            color: black;
+            height: 2.5rem; /* Use rem units for height */
+            text-align: center;
+            line-height: 2.5rem; /* Center text vertically */
+            text-decoration: none;
+            border: none;
+            display: block; /* Change to block to center horizontally */
+            width: 50%; /* Set button width */
+            margin: 1rem auto; /* Center horizontally and add margin */
+            border-radius: 5px;
+            font-size: 1.25rem; /* Use rem units for font size */
+        }
+        .menu-btn {
+            position: fixed;
+            top: 1rem; /* Use rem units for positioning */
+            right: 1rem;
+            cursor: pointer;
+            z-index: 2;
+        }
+        .menu-btn span {
+            display: block;
+            width: 2rem; /* Use rem units for width */
+            height: 0.3rem; /* Use rem units for height */
+            background-color: white; /* Color lines white */
+            margin-bottom: 0.3rem; /* Use rem units for margin */
+        }
+        .menu {
+            position: fixed;
+            top: 3rem; /* Use rem units for top position */
+            right: 1rem;
+            display: none;
+            background-color: #f9f9f9;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            padding: 1rem; /* Use rem units for padding */
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            max-width: 90%; /* Use percentage for maximum width */
+        }
+        .menu.active {
+            display: block;
+        }
+        .menu a {
+            display: block;
+            padding: 1rem 0; /* Use rem units for padding */
+            text-decoration: none;
+            color: black;
+            font-size: 1.25rem; /* Use rem units for font size */
+            text-align: center; /* Center text */
+            transition: background-color 0.3s;
+            width: 100%; /* Make menu items wider */
+        }
+        .menu a:hover {
+            background-color: #ddd;
+        }
+        .logged-message-container {
+            background-color: black; /* Light cyan background for visibility */
+            color: blue; /* Dark cyan text for contrast */
+            border: 1px solid #00796b; /* Border matching text color */
+            border-radius: 10px; /* Rounded corners for better aesthetics */
+            padding: 1rem; /* Use rem units for padding */
+            text-align: center; /* Center align text */
+            font-size: 1.25rem; /* Use rem units for font size */
+            margin-top: 2rem; /* Use rem units for margin */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+        }
+        .hacker-image {
+            display: block;
+            margin: 1rem auto 0; /* Center image and add margin */
+            max-width: 100%;
+            width: 800px;
+            max-height: 400px;
+            object-fit: cover; /* Ensure the image maintains its aspect ratio */
+            border: 3px solid #ccc; /* Add a border to the image */
+            border-radius: 10px; /* Rounded corners */
+        }
+        .error-message {
+            color: red;
+            font-size: 1.25rem; /* Use rem units for font size */
+            font-weight: bold;
+            text-align: center;
+            margin: 1rem 0; /* Use rem units for margin */
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome To Safety Overflow!</h1>
+    <h2>Your customized binary instrumentation tool.</h2>
+    <div class="container">
+        <p style="color:black;">We hope you will enjoy your stay at our website. Our intent is to aid you in fixing memory leaks in C programs,
+            as well as provide you with a debugger for the Risc-V architecture. While you are here, make sure to visit our forums and participate in discussions with other computer enthusiasts just like you.</p>
+        {% if logged_message %}
+        <div class="logged-message-container">
+            <h3>{{ logged_message }}</h3>
+        </div>
+        <img src="{{ url_for('static', filename='hacker.jpeg') }}" class="hacker-image">
+        {% else %}
+        <form action="#" method="POST">
+            <label for="username" style="color:black;">Username:</label><br>
+            <input type="text" id="username" name="username" required><br>
+            <label for="pwd" style="color:black;">Password:</label><br>
+            <input type="password" id="pwd" name="pwd" required><br>
+            <input type="submit" value="Login">
+        </form>
+        <p style="text-align: center; color: black;">Haven't registered yet? Join us!</p>
+        <a href="register.html" class="register-btn">Register</a>
+        {% endif %}
+        {% if error_message %}
+        <div class="error-message">{{ error_message }}</div>
+        {% endif %}
+    </div>
+    {% if logged_message %}
+    <div class="menu-btn" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <div class="menu" id="menu">
+        <a href="/forum.html">Forums</a>
+        <a href="/download.html">Machine</a>
+    </div>
+    {% endif %}
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById('menu');
+            menu.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

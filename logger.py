@@ -3,11 +3,25 @@ from datetime import datetime
 
 
 class Logger:
-    def __init__(self, filename, level=logging.INFO):
+    """
+    log program messages
+    self.filename (str): log filename
+    """
+    def __init__(self, filename: str) -> None:
+        """
+        constructor
+        :param filename: log file
+        """
         self.filename = filename
         open(filename, "w")
 
-    def log(self, msg, level=logging.INFO):
+    def log(self, msg: str, level: int = logging.INFO) -> None:
+        """
+        document actions
+        :param msg: log message
+        :param level: log type
+        :return: None
+        """
         file = open(self.filename, "a")
         match level:
             case logging.WARNING:
@@ -20,7 +34,7 @@ class Logger:
                 operation = "INFO"
         now = datetime.now()
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
-        file.write(f"{dt_string} - {level} - {msg}\n")
+        file.write(f"{dt_string} - {operation} - {msg}\n")
         file.close()
 
 

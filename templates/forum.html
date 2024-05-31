@@ -148,6 +148,12 @@
         #create-form input[type="submit"]:hover {
             background-color: #005f7f;
         }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -157,11 +163,12 @@
     <div class="comment">{{ comments }}</div>
     <form class="comment-form" action="#" method="POST">
         <label for="new-comment">Add a new comment:</label>
-        <textarea id="new-comment" name="new-comment" required></textarea>
+        <textarea id="new-comment" name="new-comment" maxlength="500" required></textarea>
         <input type="submit" value="Submit">
+        <input type="hidden" name="csrf" value="{{csrf}}">
     </form>
     <br>
-    <button type="button" id="button" onclick="goBack()" style="margin-bottom: -200px; height: 50px; width: 860px; font-size: 16px; display: inline-block; margin-right:100px;">Back</button>
+    <a id="button" href="{{ url_for('forum') }}" style="margin-bottom: -200px; height: 50px; width: 860px; font-size: 16px; display: inline-block; margin-right:100px;">Back</a>
 </div>
 {% else %}
 <div class="forum-section">
@@ -173,15 +180,19 @@
         </li>
         {% endfor %}
     </ul>
-    <button type="button" id="button" onclick="goBack()" style="margin-bottom: -5px; height: 50px; font-size: 16px; display: inline-block;">Back</button>
+    {% if error_message %}
+        <div class="error-message">{{ error_message }}</div>
+    {% endif %}
+    <a id="button" href="{{ url_for('home') }}" style="margin-bottom: -5px; height: 50px; font-size: 16px; display: inline-block;">Back</a>
 <button type="button" id="toggle-create-form" style="margin-top: 20px; display: inline; height: 50px; background-color: red;">Create Thread</button>
     <div id="create-form" class="comment-form">
         <form action="#" method="POST">
             <label for="new-thread" style="color:black; font-size:20px;" >Thread Name:</label>
-            <input type="text" id="new-thread" name="new-thread" required placeholder="Only letters, numbers, and underscores">
+            <input type="text" id="new-thread" name="new-thread" placeholder="Only letters, numbers, and underscores" maxlength="40" required>
             <label for="first-comment" style="color:black; font-size:20px;">First Comment:</label>
-            <textarea id="first-comment" name="first-comment" required></textarea>
+            <textarea id="first-comment" name="first-comment" maxlength="500" required></textarea>
             <input type="submit" value="Create Thread" style="background-color:green;">
+            <input type="hidden" name="csrf" value="{{csrf}}">
         </form>
     </div>
 </div>
@@ -198,9 +209,6 @@
         });
     });
 
-    function goBack() {
-        window.history.back();
-    }
 </script>
 </body>
 </html>

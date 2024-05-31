@@ -64,11 +64,11 @@
     <div id="registration-form">
         <form action="{{ url_for('register') }}" method="POST">
             <label for="username">Username:</label><br>
-            <input type="text" id="username" name="username" required><br>
+            <input type="text" id="username" name="username" maxlength="40" required><br>
             <label for="pwd">Password:</label><br>
             <input type="password" id="pwd" name="pwd" required><br>
             <label for="pwd2">Password Again:</label><br>
-            <input type="password" id="pwd2" name="pwd2" required><br>
+            <input type="password" id="pwd2" name="pwd2" maxlength="40" required><br>
             {% if error_message %}
             <div class="error-message">{{ error_message }}</div>
             {% endif %}

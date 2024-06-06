@@ -1,85 +1,24 @@
-31/05/2024 06:51:34 - INFO - Server set up at ('127.0.0.1', 1024).
-31/05/2024 06:51:38 - INFO - Connection accepted from ('127.0.0.1', 20561).
-31/05/2024 06:51:41 - INFO - Welcome a
-31/05/2024 06:56:37 - INFO - Threads:
+06/06/2024 04:10:10 - INFO - Server set up at ('127.0.0.1', 1024).
+06/06/2024 04:10:10 - INFO - Connection accepted from ('127.0.0.1', 26252).
+06/06/2024 04:10:14 - INFO - Welcome a
+06/06/2024 04:10:15 - INFO - Threads:
 	fd 
-	(Published at:31/05/2024 06:05:50).
-	test 
-	(Published at:31/05/2024 06:07:13).
-	final 
-	(Published at:31/05/2024 06:10:28).
-	inon 
-	(Published at:31/05/2024 06:14:53).
+	(Published at:06/06/2024 04:00:08).
+	Help! 
+	(Published at:06/06/2024 04:06:41).
 	
-31/05/2024 06:56:39 - INFO - fd:
-	0: Author:a
-	Time:31/05/2024 06:05:50
-	df
-	
-	1: Author:a
-	Time:31/05/2024 06:10:33
-	fd
-	
-	2: Author:a
-	Time:31/05/2024 06:11:15
-	fd
-	
-	3: Author:a
-	Time:31/05/2024 06:11:39
-	fd
-	
-	4: Author:a
-	Time:31/05/2024 06:12:24
-	fd
-	
-	5: Author:a
-	Time:31/05/2024 06:13:07
-	fd
-	
-	
-31/05/2024 06:56:45 - INFO - Threads:
+06/06/2024 04:10:17 - INFO - DONE
+06/06/2024 04:10:18 - INFO - Threads:
 	fd 
-	(Published at:31/05/2024 06:05:50).
-	test 
-	(Published at:31/05/2024 06:07:13).
-	final 
-	(Published at:31/05/2024 06:10:28).
-	inon 
-	(Published at:31/05/2024 06:14:53).
+	(Published at:06/06/2024 04:00:08).
+	Help! 
+	(Published at:06/06/2024 04:06:41).
 	
-31/05/2024 06:57:29 - INFO - fd:
-	0: Author:a
-	Time:31/05/2024 06:05:50
-	df
-	
-	1: Author:a
-	Time:31/05/2024 06:10:33
-	fd
-	
-	2: Author:a
-	Time:31/05/2024 06:11:15
-	fd
-	
-	3: Author:a
-	Time:31/05/2024 06:11:39
-	fd
-	
-	4: Author:a
-	Time:31/05/2024 06:12:24
-	fd
-	
-	5: Author:a
-	Time:31/05/2024 06:13:07
-	fd
-	
-	
-31/05/2024 07:09:55 - INFO - Threads:
-	fd 
-	(Published at:31/05/2024 06:05:50).
-	test 
-	(Published at:31/05/2024 06:07:13).
-	final 
-	(Published at:31/05/2024 06:10:28).
-	inon 
-	(Published at:31/05/2024 06:14:53).
-	
+06/06/2024 04:10:22 - ERROR - Invalid file path was provided.
+06/06/2024 04:10:22 - INFO - DONE
+06/06/2024 04:10:24 - ERROR - Invalid file path was provided.
+06/06/2024 04:10:24 - INFO - DONE
+06/06/2024 04:10:25 - ERROR - Invalid file path was provided.
+06/06/2024 04:10:25 - INFO - DONE
+06/06/2024 04:12:27 - INFO - Connection accepted from ('127.0.0.1', 26593).
+06/06/2024 05:17:50 - INFO - Server Closed.

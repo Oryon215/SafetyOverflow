@@ -49,34 +49,30 @@ class ThreadManager:
             index = res[0][0]
         return int(index)
 
-    def create_thread(self, thread_name: str) -> None:
+    def create_thread(self, thread_name: str) -> str:
         """
         Create new forum thread
         :param thread_name: name of new thread
-        :return: None
+        :return: empty string or error in case of one
         """
-        if white_list(thread_name):
-            print(thread_name)
-            print("in1")
-            return
-        if len(self.threads_db.select("Threads", "thread_index", f"name=\"{thread_name}\"")) > 0:
-            print("in!")
+        if not white_list(thread_name):
+            return ""
+        if self.thread_exist(thread_name):
             self.logger_db.log("Thread Name already exists.", logging.WARNING)
-            return
-        print("in11111")
+            return "Thread Name already exists."
         now = datetime.now()
         dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
         self.threads_db.insert("Threads", [f"\"{thread_name}\"", str(self.thread_count), f"\"{dt_string}\""])
         self.threads_db.create_table(f"thread_{self.thread_count}", "string_table_index Int", "author varchar(255)", "date DATETIME", "father Int")
         self.thread_count += 1
+        return ""
 
-    def write_to_thread(self, thread_name: str, msg: str, author: str, max_size: str = '1024', father: int = -1) -> str:
+    def write_to_thread(self, thread_name: str, msg: str, author: str, father: int = -1) -> str:
         """
         write comment to thread or create new thread with first comment
         :param thread_name: name of thread
         :param msg: comment
         :param author: comment author
-        :param max_size: max size of the comment section in forum
         :param father: irrelevent currently, maybe add quote feature in the future
         :return: thread comment section (until it reaches max size)
         """
@@ -84,11 +80,10 @@ class ThreadManager:
             return "Thread name too long."
         if len(msg) > 500:
             return "Message too long."
-        if white_list(msg) or white_list(author) or white_list(str(father)):
+        if not white_list(msg) or not white_list(author) or not white_list(str(father)):
             return ""
-        print(self.thread_not_exist(thread_name))
-        if (not self.thread_not_exist(thread_name)) and max_size == '1025':
-            return "Thread Name exists already."
+        if not self.thread_exist(thread_name):
+            return "Thread name does not exist."
         self.create_thread(thread_name)
         index = self.get_index_thread(thread_name)
         now = datetime.now()
@@ -97,13 +92,12 @@ class ThreadManager:
         with open(f".\\{self.db_path}\\text", 'a') as text:
             text.write(f"{msg}{ThreadManager.SEPARATOR}")
             self.string_table_index += 1
-        return self.read_thread(thread_name, max_size)
+        return self.read_thread(thread_name)
 
-    def read_thread(self, thread_name: str, max_size: str = '1024') -> str:
+    def read_thread(self, thread_name: str) -> str:
         """
         read comments in thread
         :param thread_name: name of thread
-        :param max_size: max size of returned comments
         :return: comments in thread (the comments are limited so that they won't exceed the max size)
         """
         if len(thread_name) > 40:
@@ -121,10 +115,8 @@ class ThreadManager:
                     comment += f"Quoted:{self.read_from_text(rows[row[3]][0])}\n\t"
                 comment += self.read_from_text(row[0]) + "\n\t"
                 comment += "\n\t"
-                i += 1
-                if len(thread) + len(comment) > int(max_size):
-                    break
                 thread += comment
+                i += 1
             return thread
         self.logger_db.log("Cannot find thread.", logging.WARNING)
         return ""
@@ -151,12 +143,14 @@ class ThreadManager:
         rows = self.threads_db.select("Threads")
         return rows
 
-    def thread_not_exist(self, name: str) -> bool:
-        rows = self.threads_db.select("Threads")
-        for row in rows:
-            if row[0] == name:
-                return False
-        return True
+    def thread_exist(self, name: str) -> bool:
+        """
+        Check if thread doesn't already exists
+        :param name: name of thread
+        :return: true of exists and false otherwise
+        """
+        rows = self.threads_db.select("Threads", where=f"name=\"{name}\"")
+        return len(rows) > 0
 
     def list_threads(self) -> str:
         """

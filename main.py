@@ -49,7 +49,7 @@ def white_list(string: str) -> bool:
     # return False if string input is in black list to prevent injection attacks otherwise True
     if string is not None:
         for ch in string:
-            if ch not in BLACK_LIST:
+            if ch in BLACK_LIST:
                 return False
     return True
 
@@ -75,7 +75,7 @@ def home() -> str or Response:
     # check login request (POST)
     if request.method == "POST":
         # check valid input (in white list)
-        if white_list(request.form.get("pwd")) or white_list(request.form.get("username")):
+        if not white_list(request.form.get("pwd")) or not white_list(request.form.get("username")):
             error_message = "Password and username mustn't contain quotation marks or newline."
             return error(error_message, 'home.html')
 
@@ -105,7 +105,7 @@ def register() -> str:
             error_message = "Password and Username must include at least 1 character."
             return error(error_message, 'register.html')
         # check input validity (SQL Injection)
-        if white_list(request.form.get("pwd")) or white_list(request.form.get("username")):
+        if not white_list(request.form.get("pwd")) or not white_list(request.form.get("username")):
             error_message = "Password and username mustn't contain quotation marks or newline."
             return error(error_message, 'register.html')
         # check password authentication validity
@@ -139,18 +139,20 @@ def forum() -> str:
         return "Error user not connected."
     # check for new thread request (POST)
     if request.form.get('new-thread') is not None:
-        if not white_list(request.form.get('new-thread')):
-            res = write_thread(CLIENT, request.form.get('new-thread'), request.form.get('first-comment'),
-                         request.cookies.get("name"), str(-1), '1025')
-            if res == "Thread Name exists already.":
-                error = "Thread Name exists already."
+        if white_list(request.form.get('new-thread')):
+            res = create_thread(CLIENT, request.form.get("new-thread"))
+            if res == "Thread Name already exists.":
+                error = res
+            else:
+                write_thread(CLIENT, request.form.get('new-thread'), request.form.get('first-comment'),
+                             request.cookies.get("name"), str(-1), '1024')
     thread = request.args.get('thread')
     # check for default request
     if thread is None:
         threads = list_threads(CLIENT)
-        print(threads)
         if threads == 'Threads:\n\t':
             return render_template('forum.html', threads=[], headline='No Threads available currently.', csrf=csrf_token)
+        print(threads)
         parts = threads.split(":")
         return render_template('forum.html', threads=":".join(parts[1:]).split(".")[:-1], headline=parts[0], csrf=csrf_token, error_message=error)
     # check for thread view request (GET)
@@ -176,8 +178,10 @@ def download() -> str or Response:
     if request.method == "POST":
         # check for download request (POST)
         filename = request.form.get("files")
-        if os.path.exists(f".\\files\\{filename}"):
-            return send_file(f".\\files\\{filename}", as_attachment=True)
+        res = download_file(CLIENT, filename)
+        with open(f".\\files\\{filename}", 'wb') as file:
+            file.write(res)
+        return send_file(f".\\files\\{filename}", as_attachment=True)
     # default page (GET)
     return render_template('download.html', filenames=FILE_LIST)
 

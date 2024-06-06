@@ -30,7 +30,7 @@ class AuthManager:
         """
         if len(username) > 255 or len(password) > 255:
             return "Username or password too long."
-        if white_list(username) or white_list(password):
+        if not white_list(username) or not white_list(password):
             return ""
         if len(self.user_db.select("users", where=f"username=\"{username}\"")) > 0:
             return f"{username} already exists."

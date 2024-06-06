@@ -22,11 +22,16 @@
             text-align: center;
             margin-left: 10px; /* Adjust margin to move slightly to the left */
         }
-        .comment-section, .forum-section {
+        .comment-section {
             width: 100%;
             max-width: 900px;
             padding: 20px;
             box-sizing: border-box;
+            height: 400px; /* Set a fixed height for the comment section */
+            overflow-y: auto; /* Enable vertical scrolling */
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background for better readability */
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         .comment {
             background-color: white;
@@ -161,6 +166,8 @@
 {% if comments %}
 <div class="comment-section">
     <div class="comment">{{ comments }}</div>
+</div>
+<div class="comment-form-container">
     <form class="comment-form" action="#" method="POST">
         <label for="new-comment">Add a new comment:</label>
         <textarea id="new-comment" name="new-comment" maxlength="500" required></textarea>

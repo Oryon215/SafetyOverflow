@@ -50,8 +50,9 @@ def write_thread(client: Client, title: str, message: str, author: str, father: 
     :param father: The parent thread ID for replies (0 for new threads).
     :return: The server's response to the write request.
     """
-    client.send(Protocol.compile_message(OPERATIONS.WRITE, title, message, author, max_size, father))
-    return Protocol.final_value(client.recv())
+    client.send(Protocol.compile_message(OPERATIONS.WRITE, title, message, author, father))
+    res = Protocol.recv_file(client.ssock)
+    return res.decode()
 
 
 def read_thread(client: Client, title: str) -> str:
@@ -61,11 +62,11 @@ def read_thread(client: Client, title: str) -> str:
     :param title: The title of the thread to read.
     :return: The server's response containing the thread content.
     """
-    client.send(Protocol.compile_message(OPERATIONS.READ, title, '1024'))
-    return Protocol.final_value(client.recv())
+    client.send(Protocol.compile_message(OPERATIONS.READ, title))
+    return Protocol.recv_file(client.ssock).decode()
 
 
-def download_file(client: Client, file_name: str) -> str:
+def download_file(client: Client, file_name: str) -> bytearray:
     """
     Downloads a file with the given name from the server.
     :param client: The client object to send the request.
@@ -73,4 +74,15 @@ def download_file(client: Client, file_name: str) -> str:
     :return: The file data received from the server.
     """
     client.send(Protocol.compile_message(OPERATIONS.DOWNLOAD_FILE, file_name))
+    return Protocol.recv_file(client.ssock)
+
+
+def create_thread(client: Client, thread_name: str) -> str:
+    """
+    Create new thread
+    :param client: client object to send the request
+    :param thread_name: name of thread to be created
+    :return: value from server
+    """
+    client.send(Protocol.compile_message(OPERATIONS.NEW_THREAD, thread_name))
     return Protocol.final_value(client.recv())

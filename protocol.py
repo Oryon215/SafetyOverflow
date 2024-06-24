@@ -165,12 +165,14 @@ class Protocol:
         :return:
         """
         try:
+            print(filename)
             if not os.path.exists(f".\\files\\{filename}"):
                 raise FileNotFoundError
-            file = open(filename, "rb").read()
+            file = open(f".\\files\\{filename}", "rb").read()
         except FileNotFoundError:
             Protocol.handle_error(sock, logger, Error.FileNotFound)
             return Protocol.FINISH
+        print("send chunks...")
         return Protocol.send_chunks(sock, logger, file)
 
     @staticmethod
@@ -194,7 +196,7 @@ class Protocol:
             index += Protocol.CHUNK_SIZE
             try:
                 packet_msg = sock.recv(1024).decode()
-                if packet_msg[0] != OPERATIONS.FILE_RECV:
+                if packet_msg[Protocol.MESSAGE_BODY:Protocol.MESSAGE_BODY + 2] != OPERATIONS.FILE_RECV.value:
                     Protocol.handle_error(sock, logger, Error.SendFile)
                     return ''
                 msg = Protocol.final_value(packet_msg)

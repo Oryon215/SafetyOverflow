@@ -1,24 +1,32 @@
-06/06/2024 04:10:10 - INFO - Server set up at ('127.0.0.1', 1024).
-06/06/2024 04:10:10 - INFO - Connection accepted from ('127.0.0.1', 26252).
-06/06/2024 04:10:14 - INFO - Welcome a
-06/06/2024 04:10:15 - INFO - Threads:
+25/06/2024 01:05:45 - INFO - Server set up at ('127.0.0.1', 1024).
+25/06/2024 01:05:47 - INFO - Connection accepted from ('127.0.0.1', 13662).
+25/06/2024 01:06:01 - INFO - Username or password incorrect.
+25/06/2024 01:06:24 - INFO - User yuno Successfully added
+25/06/2024 01:06:28 - INFO - yuno already exists.
+25/06/2024 01:06:33 - INFO - Welcome yuno
+25/06/2024 01:06:37 - INFO - Threads:
 	fd 
-	(Published at:06/06/2024 04:00:08).
-	Help! 
-	(Published at:06/06/2024 04:06:41).
+	(Published at:25/06/2024 00:49:35).
 	
-06/06/2024 04:10:17 - INFO - DONE
-06/06/2024 04:10:18 - INFO - Threads:
+25/06/2024 01:06:39 - INFO - DONE
+25/06/2024 01:06:43 - INFO - DONE
+25/06/2024 01:06:43 - INFO - DONE
+25/06/2024 01:06:45 - INFO - Threads:
 	fd 
-	(Published at:06/06/2024 04:00:08).
-	Help! 
-	(Published at:06/06/2024 04:06:41).
+	(Published at:25/06/2024 00:49:35).
 	
-06/06/2024 04:10:22 - ERROR - Invalid file path was provided.
-06/06/2024 04:10:22 - INFO - DONE
-06/06/2024 04:10:24 - ERROR - Invalid file path was provided.
-06/06/2024 04:10:24 - INFO - DONE
-06/06/2024 04:10:25 - ERROR - Invalid file path was provided.
-06/06/2024 04:10:25 - INFO - DONE
-06/06/2024 04:12:27 - INFO - Connection accepted from ('127.0.0.1', 26593).
-06/06/2024 05:17:50 - INFO - Server Closed.
+25/06/2024 01:06:50 - INFO - 
+25/06/2024 01:06:50 - INFO - DONE
+25/06/2024 01:06:50 - INFO - Threads:
+	fd 
+	(Published at:25/06/2024 00:49:35).
+	hello 
+	(Published at:25/06/2024 01:06:50).
+	
+25/06/2024 01:06:51 - INFO - DONE
+25/06/2024 01:06:52 - INFO - Threads:
+	fd 
+	(Published at:25/06/2024 00:49:35).
+	hello 
+	(Published at:25/06/2024 01:06:50).
+	

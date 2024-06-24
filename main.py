@@ -178,14 +178,21 @@ def download() -> str or Response:
     if request.method == "POST":
         # check for download request (POST)
         filename = request.form.get("files")
-        res = download_file(CLIENT, filename)
-        with open(f".\\files\\{filename}", 'wb') as file:
-            file.write(res)
-        return send_file(f".\\files\\{filename}", as_attachment=True)
+        print(filename)
+        if filename in FILE_LIST:
+            if not os.path.exists(f".\\user_files\\{filename}"):
+                res = download_file(CLIENT, filename)
+                with open(f".\\user_files\\{filename}", 'wb') as file:
+                    file.write(res)
+                    file.close()
+            return send_file(f".\\user_files\\{filename}", as_attachment=True)
     # default page (GET)
     return render_template('download.html', filenames=FILE_LIST)
 
 
 if __name__ == '__main__':
     CLIENT.connect("127.0.0.1", 1024)
+    if not os.path.exists(f".\\user_files"):
+        os.mkdir("user_files")
     app.run()
+    os.remove("user_files")

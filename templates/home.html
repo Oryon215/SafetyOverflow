@@ -17,6 +17,8 @@
             padding: 0;
             min-height: 100vh;
             background-image: url("{{ url_for('static', filename='background.jpg') }}");
+            background-size: cover;
+            background-position: center;
         }
         .container {
             background-color: #f0f0f0; /* Updated background color to a nice gray shade */
@@ -26,6 +28,7 @@
             padding: 2rem; /* Use rem units for padding */
             box-sizing: border-box;
             margin: 2rem auto; /* Center the container */
+            max-height: 40rem;
         }
         .container p {
             background-color: #f0f0f0; /* Ensure paragraph background matches container */
@@ -115,6 +118,7 @@
             object-fit: cover; /* Ensure the image maintains its aspect ratio */
             border: 3px solid #ccc; /* Add a border to the image */
             border-radius: 10px; /* Rounded corners */
+            max-height: 10rem;
         }
         .error-message {
             color: red;
@@ -129,7 +133,7 @@
     <h1>Welcome To Safety Overflow!</h1>
     <h2>Your customized binary instrumentation tool.</h2>
     <div class="container">
-        <p style="color:black;">We hope you will enjoy your stay at our website. Our intent is to aid you in fixing memory leaks in C programs,
+        <p style="color:black; font-size: 1rem; max-height: 20rem;">We hope you will enjoy your stay at our website. Our intent is to aid you in fixing memory leaks in C programs,
             as well as provide you with a debugger for the Risc-V architecture. While you are here, make sure to visit our forums and participate in discussions with other computer enthusiasts just like you.</p>
         {% if logged_message %}
         <div class="logged-message-container">
